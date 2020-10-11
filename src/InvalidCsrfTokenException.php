@@ -4,7 +4,7 @@ namespace Falgun\Middlewares;
 
 use Exception;
 
-class InvalidCsrfTokenException extends Exception
+final class InvalidCsrfTokenException extends Exception
 {
 
     public function __construct()

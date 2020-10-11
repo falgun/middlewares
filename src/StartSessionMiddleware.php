@@ -7,16 +7,21 @@ use Falgun\Midlayer\Layers;
 use Falgun\Http\Session;
 use Falgun\Http\RequestInterface;
 
-class StartSessionMiddleware implements MiddlewareInterface
+final class StartSessionMiddleware implements MiddlewareInterface
 {
 
-    protected Session $session;
+    private Session $session;
 
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param Layers $layer
+     * @return mixed from inner layer (controller)
+     */
     public function handle(RequestInterface $request, Layers $layer)
     {
         $this->session->start();

@@ -7,18 +7,24 @@ use Falgun\Http\Session;
 use Falgun\Midlayer\Layers;
 use Falgun\Http\RequestInterface;
 
-class CheckCsrfTokenMiddleware implements MiddlewareInterface
+final class CheckCsrfTokenMiddleware implements MiddlewareInterface
 {
 
-    const CSRF_KEY = 'csrf_token';
+    private const CSRF_KEY = 'csrf_token';
 
-    protected Session $session;
+    private Session $session;
 
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param Layers $layer
+     * @return mixed from inner layer (controller)
+     * @throws InvalidCsrfTokenException
+     */
     public function handle(RequestInterface $request, Layers $layer)
     {
         if ($request->getMethod() === 'POST') {
