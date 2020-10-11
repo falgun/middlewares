@@ -9,7 +9,7 @@ final class InvalidCsrfTokenException extends Exception
 
     public function __construct()
     {
-        parent::__construct('Invalid CSRF Token provided', 403);
+        parent::__construct('Invalid CSRF Token provided!', 403);
     }
 
 }
