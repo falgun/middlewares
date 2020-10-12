@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Falgun\Middlewares;
 
-use Falgun\Midlayer\Layers;
 use Falgun\Http\Session;
 use Falgun\Http\RequestInterface;
+use Falgun\Midlayer\LayersInterface;
+use Falgun\Midlayer\MiddlewareInterface;
 
 final class StartSessionMiddleware implements MiddlewareInterface
 {
@@ -19,14 +20,14 @@ final class StartSessionMiddleware implements MiddlewareInterface
 
     /**
      * @param RequestInterface $request
-     * @param Layers $layer
+     * @param LayersInterface $layers
      * @return mixed from inner layer (controller)
      */
-    public function handle(RequestInterface $request, Layers $layer)
+    public function handle(RequestInterface $request, LayersInterface $layers)
     {
         $this->session->start();
 
-        $response = $layer->next($request);
+        $response = $layers->next($request);
 
         return $response;
     }

@@ -13,15 +13,25 @@ use Falgun\Middlewares\InvalidCsrfTokenException;
 final class CsrfTest extends TestCase
 {
 
+    private function getDummyLayer(): Layers
+    {
+        return new Layers(
+            [],
+            function() {
+            return true;
+        },
+            function() {
+            
+        }
+        );
+    }
+
     public function testInvalidCsrf()
     {
         $session = new MockSession();
         $session->set('csrf_token', '1234567');
         $request = new MockRequest();
-        $layer = new Layers([], function() {
-            return true;
-        });
-
+        $layer = $this->getDummyLayer();
         $csrfMiddleware = new CheckCsrfTokenMiddleware($session);
 
         $this->expectException(InvalidCsrfTokenException::class);
@@ -33,9 +43,7 @@ final class CsrfTest extends TestCase
         $session = new MockSession();
         $session->set('csrf_token', '1234567890');
         $request = new MockRequest();
-        $layer = new Layers([], function() {
-            return true;
-        });
+        $layer = $this->getDummyLayer();
 
         $csrfMiddleware = new CheckCsrfTokenMiddleware($session);
 
@@ -49,9 +57,7 @@ final class CsrfTest extends TestCase
         $request = new MockRequest();
         $request->setMethod('GET');
 
-        $layer = new Layers([], function() {
-            return true;
-        });
+        $layer = $this->getDummyLayer();
 
         $csrfMiddleware = new CheckCsrfTokenMiddleware($session);
 

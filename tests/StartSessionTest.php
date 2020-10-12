@@ -12,13 +12,24 @@ use Falgun\Middlewares\StartSessionMiddleware;
 final class StartSessionTest extends TestCase
 {
 
+    private function getDummyLayer(): Layers
+    {
+        return new Layers(
+            [],
+            function() {
+            return true;
+        },
+            function() {
+            
+        }
+        );
+    }
+
     public function testStartOnFirstVisit()
     {
         $session = new MockSession();
         $request = new MockRequest();
-        $layer = new Layers([], function() {
-            return true;
-        });
+        $layer = $this->getDummyLayer();
 
         $middleware = new StartSessionMiddleware($session);
 

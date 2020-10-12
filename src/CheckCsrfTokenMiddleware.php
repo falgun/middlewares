@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Falgun\Middlewares;
 
 use Falgun\Http\Session;
-use Falgun\Midlayer\Layers;
 use Falgun\Http\RequestInterface;
+use Falgun\Midlayer\LayersInterface;
+use Falgun\Midlayer\MiddlewareInterface;
 
 final class CheckCsrfTokenMiddleware implements MiddlewareInterface
 {
@@ -21,11 +22,11 @@ final class CheckCsrfTokenMiddleware implements MiddlewareInterface
 
     /**
      * @param RequestInterface $request
-     * @param Layers $layer
+     * @param LayersInterface $layers
      * @return mixed from inner layer (controller)
      * @throws InvalidCsrfTokenException
      */
-    public function handle(RequestInterface $request, Layers $layer)
+    public function handle(RequestInterface $request, LayersInterface $layers)
     {
         if ($request->getMethod() === 'POST') {
             $token = $request->postDatas()->get(self::CSRF_KEY);
@@ -34,7 +35,7 @@ final class CheckCsrfTokenMiddleware implements MiddlewareInterface
                 $this->session->get(self::CSRF_KEY) === $token) {
 
                 // Token matched with session
-                return $layer->next($request);
+                return $layers->next($request);
             }
 
             throw new InvalidCsrfTokenException();
@@ -42,6 +43,6 @@ final class CheckCsrfTokenMiddleware implements MiddlewareInterface
             $this->session->set(self::CSRF_KEY, \bin2hex(\random_bytes(32)));
         }
 
-        return $layer->next($request);
+        return $layers->next($request);
     }
 }
