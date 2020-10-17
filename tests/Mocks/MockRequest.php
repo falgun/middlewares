@@ -40,7 +40,7 @@ final class MockRequest implements \Falgun\Http\RequestInterface
 
     public function postDatas(): \Falgun\Http\Parameters\PostDatas
     {
-        return new \Falgun\Http\Parameters\PostDatas(['csrf_token' => '1234567890']);
+        return new \Falgun\Http\Parameters\PostDatas(['_token' => '1234567890']);
     }
 
     public function queryDatas(): \Falgun\Http\Parameters\QueryDatas
