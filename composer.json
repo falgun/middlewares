@@ -22,9 +22,9 @@
     },
     "require": {
         "php": "^7.4",
-        "falgunphp/csrf": "dev-master",
+        "falgunphp/csrf": "^0.0",
         "falgunphp/http": "^0.0",
-        "falgunphp/midlayer": "dev-master"
+        "falgunphp/midlayer": "^0.0"
     },
     "scripts": {
         "phpunit": "phpunit --verbose --colors=always"
